@@ -19,6 +19,7 @@ import { useState } from "react";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { AuthFormProps } from "./AuthForm";
+import { recoverPassword } from "@/app/actions/auth/auth";
 
 
 const RecoverPasswordForm = ({ setTypeSelected }: AuthFormProps) => {
@@ -48,7 +49,9 @@ const RecoverPasswordForm = ({ setTypeSelected }: AuthFormProps) => {
         setisLoading(true);
 
         try {
-      
+      const response=await recoverPassword(user);
+      toast.success(response.message, { duration: 2500 });
+      setTypeSelected('sign-in')
             console.log(user);
             
 

@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 // Creating a handler to a GET request to route /auth/confirm
 export async function GET(request: NextRequest) {
 
-  const requestUrl = new URL(request.url)  
+  const requestUrl = new URL(request.url)
   const { searchParams } = new URL(requestUrl)
   const token_hash = searchParams.get('token_hash')
   const type = searchParams.get('type') as EmailOtpType | null
@@ -25,16 +25,16 @@ export async function GET(request: NextRequest) {
       token_hash,
     })
 
-    if(type==='email'){
-                    return NextResponse.redirect(`${requestUrl.origin}/dashboard`)
+    if (type === 'email') {
+      return NextResponse.redirect(`${requestUrl.origin}/dashboard`)
 
-        }
-        if(type==='recovery'){
-                    return NextResponse.redirect(`${requestUrl.origin}/dashboard`)
+    }
+    if (type === 'recovery') {
+      return NextResponse.redirect(`${requestUrl.origin}/update-password`)
 
-        }
+    }
 
-            if (!error) {
+    if (!error) {
       redirectTo.searchParams.delete('next')
       return NextResponse.redirect(redirectTo)
     }

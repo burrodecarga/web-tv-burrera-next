@@ -49,4 +49,41 @@ export async function register(formData:{username: string, email: string, passwo
     message: "Registration successful, Usuario registrado con éxito",
     data
   }
+}
+
+
+export async function recoverPassword(formData:{ email: string}) {
+  const supabase = await createClient()
+  const { error,data } = await supabase.auth.resetPasswordForEmail(formData.email)   
+
+  if (error) {
+    return {
+      success: false,
+      message: error.message
+    }
+  }
+
+  return {
+    success: true,
+    message: "Correo de recuperación enviado con éxito",
+    data
+  }
 }   
+
+export async function updatePassword(formData:{password: string}) {
+  const supabase = await createClient()
+  const { error,data } = await supabase.auth.updateUser({ password: formData.password })   
+
+  if (error) {
+    return {
+      success: false,
+      message: error.message
+    }
+  }
+
+  return {
+    success: true,
+    message: "Contraseña actualizada con éxito",
+    data
+  }
+}

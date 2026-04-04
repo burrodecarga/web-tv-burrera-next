@@ -69,7 +69,7 @@ export async function updateSession(request: NextRequest) {
 
   const userServer = await getUser() 
 
-  const protectedPaths = ['/dashboard', '/profile', '/settings','/update-password'] // Add your protected paths here
+  const protectedPaths = ['/dashboard', '/profile', '/settings'] // Add your protected paths here
   
    if(!userServer && protectedPaths.includes(request.nextUrl.pathname)){
      return NextResponse.redirect(new URL('/', request.url))
