@@ -1,9 +1,12 @@
-import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { LayoutGrid } from 'lucide-react'
+'use client'
+ import { AvatarBadge } from "@/components/user/AvatarBadge" 
+import { useAuth } from '@/context/AuthContex'
+import { LayoutGrid, PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
 function DashboardPage() {
+  const {user}= useAuth()
   return (
     <>
 
@@ -13,12 +16,10 @@ function DashboardPage() {
           Gestor de Pollas
         </div>
 
-        <Link href="/profile" className="text-sm font-medium transition-colors hover:text-primary">
-         <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-          <AvatarFallback>CN</AvatarFallback> 
-          <AvatarBadge className="bg-green-100 dark:bg-green-100 text-amber-50" title='Edwin Henriquez'/>
-      </Avatar> 
+        <Link href="/profile" className="flex-row text-sm font-medium transition-colors hover:text-primary">
+        {user&&<AvatarBadge name={user?.username}
+        avatar_url={user.avatar_url||''}
+        />}
       </Link>
       </nav>
 

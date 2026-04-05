@@ -1,0 +1,1 @@
+export const USER="https://wvtbqhwauoysaisqwizo.supabase.co/storage/v1/object/sign/avatars/carrera.jpg"

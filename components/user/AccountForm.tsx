@@ -20,6 +20,8 @@ import {
 import Image from 'next/image'
 import { Input } from '../ui/input'
 import PhoneInput from '../PhoneInput'
+import { updateAvatar } from '@/app/actions/update-avatar'
+import { getImageUrl } from '@/app/utils/utils'
 
 
 const profileSchema = z.object({
@@ -106,8 +108,16 @@ export default function AccountForm({
         setIsLoadingImage(true)
 
         try {
+            const formData = new FormData
+            formData.append('file', file)
+            formData.append('userId', user.id)
 
+            const response = await updateAvatar(formData)
 
+            if (response.publicUrl) {
+                setAvatarUrl(response.publicUrl)
+                toast.success('Avatar actualizado correctamente')
+            }
 
         } catch (error: any) {
             console.error('Error al actualizar avatar:', error)
@@ -119,7 +129,7 @@ export default function AccountForm({
         }
     }
 
-
+console.log('ACOUNTFORM',avatarUrl)
 
     return (
         <div className=" border rounded-lg p-6 w-full max-w-md border-white">
@@ -136,7 +146,7 @@ export default function AccountForm({
 
                             <Image
                                 className="object-cover w-full h-full rounded-full"
-                                src={avatarUrl}
+                                src={getImageUrl(avatarUrl)}
                                 width={1000}
                                 height={1000}
                                 alt="user-img"
@@ -157,11 +167,11 @@ export default function AccountForm({
                                     disabled={isLoadingImage}
                                 />
                                 <label htmlFor="files">
-                                    <div className="w-[40px] h-[28px] cursor-pointer rounded-full text-slate-950 bg-white flex justify-center items-center hover:bg-gray-100 transition-colors">
+                                    <div className="w-10 h-7 cursor-pointer rounded-full text-slate-950 bg-white flex justify-center items-center hover:bg-gray-100 transition-colors">
                                         {isLoadingImage ? (
-                                            <LoaderCircle className="w-[18px] h-[18px] animate-spin" />
+                                            <LoaderCircle className="w-4.5 h-4.5 animate-spin" />
                                         ) : (
-                                            <Pencil className="w-[18px] h-[18px]" />
+                                            <Pencil className="w-4.5 h-4.5" />
                                         )}
                                     </div>
                                 </label>

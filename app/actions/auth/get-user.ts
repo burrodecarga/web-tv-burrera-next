@@ -1,8 +1,10 @@
     'use server'
 
+import { User } from "@/interfaces/user"
 import { createClient } from "@/lib/supabase/server"
+import { promises } from "dns"
 
-   export  const getUser = async () => {
+   export  const getUser = async ():Promise<User | null> => {
 
         try {
             const supabase = await createClient()
